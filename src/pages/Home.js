@@ -14,6 +14,7 @@ class Home extends Component {
   constructor() {
     super()
     this.state = {
+      featuredCities: null,
       keyword: ''
     }
   }
@@ -27,7 +28,7 @@ class Home extends Component {
       <>
         <ImageAndWelcome />
         <div className="container" style={{ marginTop: 30, marginBottom: 30 }}>
-          <CityList title={'Featured City'} cities={citiesDummy} />
+          <CityList title={'Featured City'} cities={this.state.featuredCities} />
           <SearchCity
             value={this.state.keyword}
             onChange={this.changeKeywordHandler}
