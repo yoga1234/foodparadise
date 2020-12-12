@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 
 import ImageAndWelcome from '../components/ImageAndWelcome'
 import CityList from '../components/CityList'
@@ -21,6 +22,26 @@ class Home extends Component {
 
   changeKeywordHandler = (event) => {
     this.setState({ keyword: event.target.value })
+  }
+
+  getFeaturedCities = () => {
+    const url = 'https://developers.zomato.com/api/v2.1/cities'
+    axios.get(url, {
+      headers: {
+        'user-key': '1673f06286e5d3d7825aa0430db649da'
+      },
+      params: {
+        city_ids: "74, 11052, 170"
+      }
+    }).then(({data}) => {
+      if (data.status === 'success') {
+        this.setState({ featuredCities: data.location_suggestions })
+      }
+    }).catch(err => console.log(err))
+  }
+
+  componentDidMount() {
+    this.getFeaturedCities()
   }
 
   render() {
