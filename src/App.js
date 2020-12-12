@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import ImageAndWelcome from './components/ImageAndWelcome'
 import CityList from './components/CityList'
 import SearchCity from './components/SearchCity'
+import Footer from './components/Footer/Footer'
 
 const citiesDummy = [
   { id: 74, name: 'Jakarta', country_name: 'Indonesia' },
@@ -37,6 +38,7 @@ class App extends Component {
           <CityList title={'Search Result'} cities={citiesDummy} />
         </div>
         {/* end of container */}
+        <Footer />
       </>
     );
   }
