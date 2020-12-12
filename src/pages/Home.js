@@ -16,6 +16,7 @@ class Home extends Component {
     super()
     this.state = {
       featuredCities: null,
+      citiesResultSearch: null,
       keyword: ''
     }
   }
@@ -40,6 +41,25 @@ class Home extends Component {
     }).catch(err => console.log(err))
   }
 
+  searchHandle = () => {
+    let keyword = this.state.keyword
+    const url = 'https://developers.zomato.com/api/v2.1/cities'
+    axios.get(url, {
+      headers: {
+        'user-key': '1673f06286e5d3d7825aa0430db649da'
+      },
+      params: {
+        q: keyword
+      }
+    })
+    .then(({ data }) => {
+      if (data.status === 'success') {
+        this.setState({ citiesResultSearch: data.location_suggestions})
+      }
+    })
+    .catch(err => console.log(err))
+  }
+
   componentDidMount() {
     this.getFeaturedCities()
   }
@@ -53,8 +73,9 @@ class Home extends Component {
           <SearchCity
             value={this.state.keyword}
             onChange={this.changeKeywordHandler}
+            onClickSearch={this.searchHandle}
           />
-          <CityList title={'Search Result'} cities={citiesDummy} />
+          <CityList title={'Search Result'} cities={this.state.citiesResultSearch} />
         </div>
       </>
     )
