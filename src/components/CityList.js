@@ -6,6 +6,10 @@ const CityList = (props) => (
     <div className="row">
       <div className="col-12">
         <h3>{props.title}</h3>
+        {
+          props.showSubtitle === true && props.subtitle !== '' &&
+            <h6 classNames="text-muted">Search result for keyword '{props.subtitle}'</h6>
+        }
       </div>
     </div>
     <div className="row">

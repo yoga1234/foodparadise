@@ -5,18 +5,13 @@ import ImageAndWelcome from '../components/ImageAndWelcome'
 import CityList from '../components/CityList'
 import SearchCity from '../components/SearchCity'
 
-const citiesDummy = [
-  { id: 74, name: 'Jakarta', country_name: 'Indonesia' },
-  { id: 11052, name: 'Bandung', country_name: 'Indonesia' },
-  { id: 170, name: 'Bali', country_name: 'Indonesia' }
-]
-
 class Home extends Component {
   constructor() {
     super()
     this.state = {
       featuredCities: null,
       citiesResultSearch: null,
+      cityKeywordSearch: '',
       keyword: ''
     }
   }
@@ -54,7 +49,11 @@ class Home extends Component {
     })
     .then(({ data }) => {
       if (data.status === 'success') {
-        this.setState({ citiesResultSearch: data.location_suggestions})
+        this.setState({
+          citiesResultSearch: data.location_suggestions,
+          keyword: '',
+          cityKeywordSearch: keyword
+        })
       }
     })
     .catch(err => console.log(err))
@@ -75,7 +74,12 @@ class Home extends Component {
             onChange={this.changeKeywordHandler}
             onClickSearch={this.searchHandle}
           />
-          <CityList title={'Search Result'} cities={this.state.citiesResultSearch} />
+          <CityList
+            title={'Search Result'}
+            cities={this.state.citiesResultSearch}
+            showSubtitle={true}
+            subtitle={this.state.cityKeywordSearch}
+          />
         </div>
       </>
     )
