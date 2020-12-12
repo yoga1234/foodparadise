@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import Navbar from './components/Navbar'
 import ImageAndWelcome from './components/ImageAndWelcome'
-import FeaturedCities from './components/FeaturedCities'
+import CityList from './components/CityList'
 import SearchCity from './components/SearchCity'
 
 const citiesDummy = [
@@ -29,11 +29,12 @@ class App extends Component {
         <Navbar />
         <ImageAndWelcome />
         <div className="container" style={{ marginTop: 30, marginBottom: 30 }}>
-          <FeaturedCities cities={citiesDummy} />
+          <CityList title={'Featured City'} cities={citiesDummy} />
           <SearchCity
             value={this.state.keyword}
             onChange={this.changeKeywordHandler}
           />
+          <CityList title={'Search Result'} cities={citiesDummy} />
         </div>
         {/* end of container */}
       </>
