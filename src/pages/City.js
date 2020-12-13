@@ -34,8 +34,13 @@ class City extends Component {
     super()
     this.state = {
       city: null,
-      categories: null
+      categories: null,
+      categorySelected: null
     }
+  }
+
+  categoryClickHandler = (category) => {
+    this.setState({ categorySelected: category })
   }
 
   transformCategoriesData(categories) {
@@ -96,7 +101,8 @@ class City extends Component {
                     this.state.categories.map(category => (
                       <button
                         key={category.id}
-                        className={'list-group-item list-group-item-action'}
+                        className={'list-group-item list-group-item-action ' + (this.state.categorySelected && category.id === this.state.categorySelected.id ? 'active' : '')}
+                        onClick = {() => this.categoryClickHandler(category)}
                       >
                         {category.name}
                       </button>
