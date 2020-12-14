@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { API } from '../config/api'
 import CategoryList from '../components/CategoryList'
+import SearchKeyword from '../components/SearchKeyword'
 
 const categoriesDummy = [
   {
@@ -113,27 +114,10 @@ class City extends Component {
             }
           </div>
           <div className="col">
-            <h5>Keyword</h5>
-            <div className="card">
-              <div className="card-body">
-                <div className="form-row">
-                  <div className="col-10">
-                    <input
-                      className="form-control"
-                      type="text"
-                      placeholder="Type keyword i.e : restaurant's name, location, cuisine, etc."
-                      value={this.state.keyword}
-                      onChange={this.changeKeywordHandler}
-                    />
-                  </div>
-                  <div className="col">
-                    <button className="btn btn-primary">
-                      Add to criteria
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <SearchKeyword
+              keyword={this.state.keyword}
+              changeKeywordHandler={this.changeKeywordHandler}
+            />
           </div>
         </div>
       </div>
