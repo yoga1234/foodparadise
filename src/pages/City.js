@@ -43,6 +43,20 @@ class City extends Component {
     }
   }
 
+  addToCriteriaHandler = () => {
+    let criteria = [...this.state.criteria]
+    criteria = criteria.filter(cri => cri.criteriaName !== 'Keyword')
+    let newCriteria = {
+      criteriaName: 'Keyword',
+      data: {
+        name: this.state.keyword
+      }
+    }
+
+    criteria.push(newCriteria)
+    this.setState({ keyword: '', criteria })
+  }
+
   categoryClickHandler = (category) => {
     let criteria = [...this.state.criteria]
     // ambil element array selain element dengan criteriaName 'Category'
@@ -132,6 +146,7 @@ class City extends Component {
             <SearchKeyword
               keyword={this.state.keyword}
               changeKeywordHandler={this.changeKeywordHandler}
+              onClickAddToCriteria={this.addToCriteriaHandler}
             />
             <div className="card bg-light mb-3" style={{ marginTop: 20 }}>
               <div className="card-body">
