@@ -4,6 +4,7 @@ import { API } from '../config/api'
 import CategoryList from '../components/CategoryList'
 import SearchKeyword from '../components/SearchKeyword'
 import SearchCriteria from '../components/SearchCriteria'
+import RestaurantCard from '../components/RestaurantCard'
 
 const categoriesDummy = [
   {
@@ -28,6 +29,49 @@ const categoriesDummy = [
     "categories": {
       "id": 4,
       "name": "Catching-up"
+    }
+  }
+]
+
+const restaurants = [
+  {
+    "restaurant": {
+      "id": "18875696",
+      "name": "Kintaro Sushi",
+      "location": {
+        "address": "Jl. Suryo No. 20, Senopati, Jakarta",
+        "locality": "Senopati",
+      },
+      "cuisines": "Sushi, Japanese",
+      "average_cost_for_two": 200000,
+      "currency": "IDR",
+      "thumb": "https://b.zmtcdn.com/data/pictures/chains/5/18530405/0feeddcbe877a8e27526a8cf5b501edf.jpg?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A",
+      "user_rating": {
+        "aggregate_rating": "4.9",
+        "rating_text": "Excellent",
+        "rating_color": "3F7E00",
+        "votes": "1358"
+      },
+    }
+  },
+  {
+    "restaurant": {
+      "id": "18875696",
+      "name": "Kintaro Sushi",
+      "location": {
+        "address": "Jl. Suryo No. 20, Senopati, Jakarta",
+        "locality": "Senopati",
+      },
+      "cuisines": "Sushi, Japanese",
+      "average_cost_for_two": 200000,
+      "currency": "IDR",
+      "thumb": "https://b.zmtcdn.com/data/pictures/chains/5/18530405/0feeddcbe877a8e27526a8cf5b501edf.jpg?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A",
+      "user_rating": {
+        "aggregate_rating": "4.9",
+        "rating_text": "Excellent",
+        "rating_color": "3F7E00",
+        "votes": "1358"
+      },
     }
   }
 ]
@@ -159,6 +203,18 @@ class City extends Component {
               criteria={this.state.criteria}
               removeCriteriaHandler={(index) => this.removeCriteriaHandler(index)}
             />
+            <div className="row">
+              <div className="col" style={{ marginBottom: 10 }}>
+                <h4 className="text-success">Restaurant List</h4>
+              </div>
+            </div>
+            <div className="row">
+              {
+                restaurants.map(({ restaurant }) => (
+                  <RestaurantCard key={restaurant.id} restaurant={restaurant} />
+                ))
+              }
+            </div>
           </div>
         </div>
       </div>
