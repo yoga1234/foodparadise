@@ -3,6 +3,7 @@ import axios from 'axios'
 import { API } from '../config/api'
 import CategoryList from '../components/CategoryList'
 import SearchKeyword from '../components/SearchKeyword'
+import SearchCriteria from '../components/SearchCriteria'
 
 const categoriesDummy = [
   {
@@ -104,6 +105,12 @@ class City extends Component {
     .catch(err => console.log(err))
   }
 
+  removeCriteriaHandler = (index) => {
+    let criteria = [...this.state.criteria]
+    criteria.splice(index, 1)
+    this.setState({ criteria })
+  }
+
   componentDidMount() {
     let categories = this.transformCategoriesData(categoriesDummy)
     this.setState({ categories })
@@ -148,39 +155,10 @@ class City extends Component {
               changeKeywordHandler={this.changeKeywordHandler}
               onClickAddToCriteria={this.addToCriteriaHandler}
             />
-            <div className="card bg-light mb-3" style={{ marginTop: 20 }}>
-              <div className="card-body">
-                <p className="card-title">Find restaurants based on criteria :</p>
-                <table className="table table-hover">
-                  <tbody>
-                    {
-                      this.state.criteria.map((cri, index) => (
-                        <tr key={index} className="table-active">
-                          <td width="40%">{cri.criteriaName} : </td>
-                          <td width="50%">{cri.data.name}</td>
-                          <td>
-                            <i
-                              className="fa fa-times"
-                              aria-hidden="true"
-                              style={{ color: 'red'}}
-                            >
-                            </i>
-                          </td>
-                        </tr>
-                      ))
-                    }
-                  </tbody>
-                </table>
-                <div className="pull-right">
-                  <button
-                    className="btn btn-primary"
-                    type="button"
-                  >
-                    Search
-                  </button>
-                </div>
-              </div>
-            </div>
+            <SearchCriteria
+              criteria={this.state.criteria}
+              removeCriteriaHandler={(index) => this.removeCriteriaHandler(index)}
+            />
           </div>
         </div>
       </div>
