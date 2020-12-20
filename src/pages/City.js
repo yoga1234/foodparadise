@@ -6,33 +6,6 @@ import SearchKeyword from '../components/SearchKeyword'
 import SearchCriteria from '../components/SearchCriteria'
 import RestaurantCard from '../components/RestaurantCard'
 
-const categoriesDummy = [
-  {
-    "categories": {
-      "id": 1,
-      "name": "Delivery"
-    }
-  },
-  {
-    "categories": {
-      "id": 2,
-      "name": "Dine-out"
-    }
-  },
-  {
-    "categories": {
-      "id": 3,
-      "name": "Nightlife"
-    }
-  },
-  {
-    "categories": {
-      "id": 4,
-      "name": "Catching-up"
-    }
-  }
-]
-
 const restaurants = [
   {
     "restaurant": {
@@ -155,9 +128,22 @@ class City extends Component {
     this.setState({ criteria })
   }
 
+  getCategoriesData = () => {
+    let url = `${API.zomato.baseUrl}/categories`
+    axios.get(url, {
+      headers: {
+        'user-key': API.zomato.api_key
+      }
+    })
+    .then(({ data }) => {
+      let categories = this.transformCategoriesData(data.categories)
+      this.setState({ categories })
+    })
+    .catch(err => console.log(err))
+  }
+
   componentDidMount() {
-    let categories = this.transformCategoriesData(categoriesDummy)
-    this.setState({ categories })
+    this.getCategoriesData()
 
     // cara mendapatkan parameter city_id dari url / route
     let { city_id } = this.props.match.params
