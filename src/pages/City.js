@@ -57,8 +57,43 @@ class City extends Component {
       categories: null,
       categorySelected: null,
       keyword: '',
-      criteria: []
+      criteria: [],
+      restaurants: []
     }
+  }
+
+  searchHandler = () => {
+    this.setState({ restaurants: null })
+    let url = `${API.zomato.baseUrl}/search`
+    let params = {}
+
+    for(let cri of this.state.criteria) {
+
+      switch (cri.criteriaName) {
+        case 'City' :
+          params.entity_id = cri.data.id
+          params.entity_type = 'city'
+          break
+        case 'Category' :
+          params.category = cri.data.id
+          break
+        case 'Keyword' :
+          params.q = cri.data.name
+          break
+        default : break
+      }
+    }
+
+    axios.get(url, {
+      headers: {
+        'user-key': API.zomato.api_key
+      },
+      params
+    })
+    .then(({ data }) => {
+      this.setState({ restaurants: data.restaurants})
+    })
+    .catch(err => console.log(err))
   }
 
   addToCriteriaHandler = () => {
@@ -188,6 +223,7 @@ class City extends Component {
             <SearchCriteria
               criteria={this.state.criteria}
               removeCriteriaHandler={(index) => this.removeCriteriaHandler(index)}
+              onClickSearch={this.searchHandler}
             />
             <div className="row">
               <div className="col" style={{ marginBottom: 10 }}>
@@ -196,9 +232,15 @@ class City extends Component {
             </div>
             <div className="row">
               {
-                restaurants.map(({ restaurant }) => (
-                  <RestaurantCard key={restaurant.id} restaurant={restaurant} />
-                ))
+                this.state.restaurants.length > 0 ? (
+                  this.state.restaurants.map(({ restaurant }) => (
+                    <RestaurantCard key={restaurant.id} restaurant={restaurant} />
+                  ))
+                ) : (
+                  <div className="col">
+                    <p>No Data Available. Please select criteria, and click Search</p>
+                  </div>
+                )
               }
             </div>
           </div>

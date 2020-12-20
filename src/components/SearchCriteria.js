@@ -34,6 +34,7 @@ const SearchCriteria = (props) => (
         <button
           className="btn btn-primary"
           type="button"
+          onClick={props.onClickSearch}
         >
           Search
         </button>
