@@ -6,49 +6,6 @@ import SearchKeyword from '../components/SearchKeyword'
 import SearchCriteria from '../components/SearchCriteria'
 import RestaurantCard from '../components/RestaurantCard'
 
-const restaurants = [
-  {
-    "restaurant": {
-      "id": "18875696",
-      "name": "Kintaro Sushi",
-      "location": {
-        "address": "Jl. Suryo No. 20, Senopati, Jakarta",
-        "locality": "Senopati",
-      },
-      "cuisines": "Sushi, Japanese",
-      "average_cost_for_two": 200000,
-      "currency": "IDR",
-      "thumb": "https://b.zmtcdn.com/data/pictures/chains/5/18530405/0feeddcbe877a8e27526a8cf5b501edf.jpg?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A",
-      "user_rating": {
-        "aggregate_rating": "4.9",
-        "rating_text": "Excellent",
-        "rating_color": "3F7E00",
-        "votes": "1358"
-      },
-    }
-  },
-  {
-    "restaurant": {
-      "id": "18875696",
-      "name": "Kintaro Sushi",
-      "location": {
-        "address": "Jl. Suryo No. 20, Senopati, Jakarta",
-        "locality": "Senopati",
-      },
-      "cuisines": "Sushi, Japanese",
-      "average_cost_for_two": 200000,
-      "currency": "IDR",
-      "thumb": "https://b.zmtcdn.com/data/pictures/chains/5/18530405/0feeddcbe877a8e27526a8cf5b501edf.jpg?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A",
-      "user_rating": {
-        "aggregate_rating": "4.9",
-        "rating_text": "Excellent",
-        "rating_color": "3F7E00",
-        "votes": "1358"
-      },
-    }
-  }
-]
-
 class City extends Component {
   constructor() {
     super()
@@ -176,6 +133,29 @@ class City extends Component {
     })
     .catch(err => console.log(err))
   }
+  renderRestaurantList = () => {
+    if (this.state.restaurants == null) {
+      return (
+        <div className="col">
+          <p>Loading...</p>
+        </div>
+      )
+    }
+
+    if (this.state.restaurants.length > 0) {
+      return (
+        this.state.restaurants.map(({ restaurant }) => (
+          <RestaurantCard key={restaurant.id} restaurant={restaurant} />
+        ))
+      )
+    } else {
+      return (
+        <div className="col">
+          <p>No Data Available. Please select criteria and click search.</p>
+        </div>
+      )
+    }
+  }
 
   componentDidMount() {
     this.getCategoriesData()
@@ -232,15 +212,7 @@ class City extends Component {
             </div>
             <div className="row">
               {
-                this.state.restaurants.length > 0 ? (
-                  this.state.restaurants.map(({ restaurant }) => (
-                    <RestaurantCard key={restaurant.id} restaurant={restaurant} />
-                  ))
-                ) : (
-                  <div className="col">
-                    <p>No Data Available. Please select criteria, and click Search</p>
-                  </div>
-                )
+                this.renderRestaurantList()
               }
             </div>
           </div>
